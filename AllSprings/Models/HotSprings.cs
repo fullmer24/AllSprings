@@ -17,5 +17,7 @@ namespace AllSprings.Models
         public bool? isPrivate { get; set; }
         public bool? isPaid { get; set; }
         public bool? Visited { get; set; }
+        public string creatorId { get; set; }
+        public Account Creator { get; set; }
     }
 }

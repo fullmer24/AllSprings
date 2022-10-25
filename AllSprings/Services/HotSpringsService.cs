@@ -1,3 +1,4 @@
+using AllSprings.Models;
 using AllSprings.Repositories;
 
 namespace AllSprings.Services
@@ -8,6 +9,11 @@ namespace AllSprings.Services
         public HotSpringsService(HotSpringsRepository hsRepo)
         {
             _hsRepo = hsRepo;
+        }
+
+        internal HotSprings Create(HotSprings newHotSprings)
+        {
+            return _hsRepo.Create(newHotSprings);
         }
     }
 }
