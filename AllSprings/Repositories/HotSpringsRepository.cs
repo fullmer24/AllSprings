@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using AllSprings.Models;
 using Dapper;
 
@@ -11,7 +13,6 @@ namespace AllSprings.Repositories
         {
             _db = db;
         }
-
         internal HotSprings Create(HotSprings newHotSprings)
         {
             string sql = @"
@@ -25,5 +26,24 @@ namespace AllSprings.Repositories
             newHotSprings.Id = Id;
             return newHotSprings;
         }
+        internal List<HotSprings> GetAll()
+        {
+            string sql = @"
+            SELECT 
+            hs.*,
+            a.*
+            FROM hotsprings hs
+            JOIN accounts a ON a.id = k.creatorId;
+            ";
+            List<HotSprings> hotSprings = _db.Query<HotSprings, Account, HotSprings>(sql, (hotSprings, account) =>
+            {
+                hotSprings.Creator = account;
+                return hotSprings;
+            }).ToList();
+            return hotSprings;
+        }
+
+
+
     }
 }

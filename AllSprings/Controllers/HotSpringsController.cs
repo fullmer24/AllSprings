@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AllSprings.Models;
 using AllSprings.Services;
@@ -12,7 +13,6 @@ namespace AllSprings.Controllers
     public class HotSpringsController : ControllerBase
     {
         private readonly HotSpringsService _hsService;
-
         public HotSpringsController(HotSpringsService hsService)
         {
             _hsService = hsService;
@@ -34,7 +34,20 @@ namespace AllSprings.Controllers
                 return BadRequest(e.Message);
             }
         }
-
+        [HttpGet]
+        public async Task<ActionResult<List<HotSprings>>> GetAll()
+        {
+            try
+            {
+                Account user = await HttpContext.GetUserInfoAsync<Account>();
+                List<HotSprings> hotSprings = _hsService.GetAll(user?.Id);
+                return Ok(hotSprings);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
     }
 }
