@@ -1,17 +1,10 @@
- using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using CodeWorks.Utils;
 using MySqlConnector;
@@ -41,9 +34,11 @@ namespace AllSprings
             });
             services.AddSingleton<Auth0Provider>();
             services.AddScoped<IDbConnection>(x => CreateDbConnection());
-            
+
             services.AddScoped<AccountsRepository>();
+            services.AddTransient<HotSpringsRepository>();
             services.AddScoped<AccountService>();
+            services.AddTransient<HotSpringsService>();
         }
 
         private void ConfigureCors(IServiceCollection services)
@@ -96,10 +91,10 @@ namespace AllSprings
             }
 
             app.UseHttpsRedirection();
-            
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
-            
+
             app.UseRouting();
 
             app.UseAuthentication();

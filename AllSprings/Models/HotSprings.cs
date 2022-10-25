@@ -2,6 +2,7 @@ namespace AllSprings.Models
 {
     public class HotSprings
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string GPS { get; set; }
         public string Location { get; set; }
@@ -13,8 +14,8 @@ namespace AllSprings.Models
         public string MainImg { get; set; }
         public string OtherImg { get; set; }
         public int Temp { get; set; }
-        public bool isPrivate { get; set; }
-        public bool isPaid { get; set; }
-        public bool Visited { get; set; }
+        public bool? isPrivate { get; set; }
+        public bool? isPaid { get; set; }
+        public bool? Visited { get; set; }
     }
 }
